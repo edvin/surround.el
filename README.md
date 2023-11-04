@@ -11,6 +11,10 @@ and it provides some convenience functions for selecting and expanding the selec
 (surround-activate-keymap)
 ```
 
+## Updating
+
+Surround is not hosted in MELPA so you have to pull it from GitHub. If you use Straight.el you can update the dependency
+with `M-x straight-pull-package` and selecting `surround`.
 
 ## Default keybindings
 
