@@ -49,6 +49,12 @@ surround-bracket-alist, use that for opposing wrap char"
 	(search-forward (surround--get-matching-bracket (char-to-string bracket-char)))
 	(if exclusive (backward-char))))
 
+(defun surround-select-line ()
+  "Select the current line"
+  (interactive)
+  (end-of-line)
+  (set-mark (point))
+  (beginning-of-line))
 (defvar surround-bracket-alist '(
   ("(" . ")")
   ("[" . "]")
@@ -63,6 +69,7 @@ isn't defined in surround-bracket-alist"
 ;; Default keybindings - you can send C-u to surround-expand-region to make it exclusive
 (keymap-global-set "C-c C-s" 'surround-region)
 (keymap-global-set "C-c C-x" 'surround-expand-region)
+(keymap-global-set "C-c C-l" 'surround-select-line)
 
 (provide 'surround)
 
