@@ -39,6 +39,7 @@ surround-bracket-alist, use that for opposing wrap char"
 	(widen)))
 
 (defun surround-expand-region (bracket-char &optional exclusive)
+  "Expand region to surrounding bracket-char(s)"
   (interactive "cExpand region to char: \nP")
   (let ((prev-beginning (if (region-active-p) (region-beginning) (point)))
 		(prev-end (if (region-active-p) (region-end) (point))))
