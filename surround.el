@@ -62,7 +62,7 @@ isn't defined in surround-bracket-alist"
 
 ;; Default keybindings - you can send C-u to surround-expand-region to make it exclusive
 (keymap-global-set "C-c C-s" 'surround-region)
-(keymap-global-set "C-c C-e" 'surround-expand-region)
+(keymap-global-set "C-c C-x" 'surround-expand-region)
 
 (provide 'surround)
 
