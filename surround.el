@@ -84,12 +84,13 @@ isn't defined in surround-bracket-alist"
   (or (cdr (assoc bracket-char surround-bracket-alist))
 	  bracket-char))
 
-;; Default keybindings - you can send C-u to surround-expand-region to make it exclusive
-(keymap-global-set "C-c C-s" 'surround-region)
-(keymap-global-set "C-c C-r" 'surround-replace-wrap)
-(keymap-global-set "C-c C-x" 'surround-expand-region)
-(keymap-global-set "C-c C-u" 'surround-unwrap)
-(keymap-global-set "C-c C-l" 'surround-select-line)
+;;;###autoload
+(defun surround-activate-keymap ()
+  (keymap-global-set "C-c C-s" 'surround-region)
+  (keymap-global-set "C-c C-r" 'surround-replace-wrap)
+  (keymap-global-set "C-c C-x" 'surround-expand-region)
+  (keymap-global-set "C-c C-u" 'surround-unwrap)
+  (keymap-global-set "C-c C-l" 'surround-select-line))
 
 (provide 'surround)
 
