@@ -30,6 +30,7 @@ surround-bracket-alist, use that for opposing wrap char"
   (surround--wrap-region bracket-char (surround--get-matching-bracket (char-to-string bracket-char))))
 
 (defun surround--wrap-region (left right)
+  "Wrap region with the left and right char parameters"
   (save-excursion
 	(narrow-to-region (region-beginning) (region-end))
 	(goto-char (point-min))
@@ -86,6 +87,7 @@ isn't defined in surround-bracket-alist"
 
 ;;;###autoload
 (defun surround-activate-keymap ()
+  "Activate default bindings for surround.el"
   (keymap-global-set "C-c C-s" 'surround-region)
   (keymap-global-set "C-c C-r" 'surround-replace-wrap)
   (keymap-global-set "C-c C-x" 'surround-expand-region)
