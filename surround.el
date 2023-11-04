@@ -1,4 +1,4 @@
-;;; surround.el --- Wrap text with brackets and quotes
+;;; surround.el --- Wrap text with brackets and quotes -*- lexical-binding: t; -*-
 
 ;; Author: Edvin Syse
 ;; URL: https://github.com/edvin/surround.el

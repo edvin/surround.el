@@ -11,16 +11,17 @@ and it provides some convenience functions for selecting and expanding the selec
 (surround-activate-keymap)
 ```
 
+
 ## Default keybindings
 
 The `surround-activate-keymap` function adds the following global keybindings:
 
 ```elisp
-  (keymap-global-set "C-c C-s" 'surround-region)
-  (keymap-global-set "C-c C-r" 'surround-replace-wrap)
-  (keymap-global-set "C-c C-x" 'surround-expand-region)
-  (keymap-global-set "C-c C-u" 'surround-unwrap)
-  (keymap-global-set "C-c C-l" 'surround-select-line))
+(keymap-global-set "C-c C-s" 'surround-region)
+(keymap-global-set "C-c C-r" 'surround-replace-wrap)
+(keymap-global-set "C-c C-x" 'surround-expand-region)
+(keymap-global-set "C-c C-u" 'surround-unwrap)
+(keymap-global-set "C-c C-l" 'surround-select-line))
 ```
 
 
