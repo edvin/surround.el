@@ -55,6 +55,15 @@ surround-bracket-alist, use that for opposing wrap char"
   (end-of-line)
   (set-mark (point))
   (beginning-of-line))
+(defun surround-unwrap ()
+  "Remove the brackets from the edges of the selected region"
+  (interactive)
+  (narrow-to-region (region-beginning) (region-end))
+  (goto-char (point-min))
+  (delete-char 1)
+  (goto-char (point-max))
+  (delete-char -1)
+  (widen))
 (defvar surround-bracket-alist '(
   ("(" . ")")
   ("[" . "]")
@@ -69,6 +78,7 @@ isn't defined in surround-bracket-alist"
 ;; Default keybindings - you can send C-u to surround-expand-region to make it exclusive
 (keymap-global-set "C-c C-s" 'surround-region)
 (keymap-global-set "C-c C-x" 'surround-expand-region)
+(keymap-global-set "C-c C-u" 'surround-unwrap)
 (keymap-global-set "C-c C-l" 'surround-select-line)
 
 (provide 'surround)
