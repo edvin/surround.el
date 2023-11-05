@@ -85,14 +85,33 @@ isn't defined in surround-bracket-alist"
   (or (cdr (assoc bracket-char surround-bracket-alist))
 	  bracket-char))
 
-;;;###autoload
-(defun surround-activate-keymap ()
-  "Activate default bindings for surround.el"
-  (keymap-global-set "C-c C-s" 'surround-region)
-  (keymap-global-set "C-c C-r" 'surround-replace-wrap)
-  (keymap-global-set "C-c C-x" 'surround-expand-region)
-  (keymap-global-set "C-c C-u" 'surround-unwrap)
-  (keymap-global-set "C-c C-l" 'surround-select-line))
+;; Define minor mode and activate keymap when surround-mode is toggled
+(make-variable-buffer-local
+ (defvar surround-mode nil
+   "Toggle surround-mode."))
+
+(defun surround-mode (&optional ARG)
+  (interactive (list 'toggle))
+  (setq surround-mode
+		(if (eq ARG 'toggle)
+			(not surround-mode)
+		  (> ARG 0)))
+
+  (if surround-mode
+	  (message "surround-mode activated!")
+	(message "surround-mode deactivated!")))
+	
+(defvar surround-mode-map (make-sparse-keymap)
+  "Keymap for surround keybindings")
+
+(define-key surround-mode-map (kbd "C-C C-s s") 'surround-region)
+(define-key surround-mode-map (kbd "C-C C-s r") 'surround-replace-wrap)
+(define-key surround-mode-map (kbd "C-C C-s x") 'surround-expand-region)
+(define-key surround-mode-map (kbd "C-C C-s u") 'surround-unwrap)
+(define-key surround-mode-map (kbd "C-C C-s l") 'surround-select-line)
+
+(add-to-list 'minor-mode-alist '(surround-mode " surround"))
+(add-to-list 'minor-mode-map-alist (cons 'surround-mode surround-mode-map))
 
 (provide 'surround)
 
