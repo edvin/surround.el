@@ -7,8 +7,8 @@ and it provides some convenience functions for selecting and expanding the selec
 
 ```elisp
 (straight-use-package
- '(surround :type git :host github :repo "edvin/surround.el"))
-(surround-activate-keymap)
+ '(surround :type git :host github :repo "edvin/surround.el")
+ :config (surround-mode 1))
 ```
 
 ## Updating
