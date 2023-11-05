@@ -90,6 +90,7 @@ isn't defined in surround-bracket-alist"
  (defvar surround-mode nil
    "Toggle surround-mode."))
 
+;;;###autoload
 (defun surround-mode (&optional ARG)
   (interactive (list 'toggle))
   (setq surround-mode
