@@ -86,12 +86,11 @@ isn't defined in surround-bracket-alist"
 	  bracket-char))
 
 ;; Define minor mode and activate keymap when surround-mode is toggled
-(make-variable-buffer-local
  (defvar surround-mode nil
-   "Toggle surround-mode."))
+   "Toggle surround-mode.")
 
-;;;###autoload
 (defun surround-mode (&optional ARG)
+  "Toggle surround-mode"
   (interactive (list 'toggle))
   (setq surround-mode
 		(if (eq ARG 'toggle)
@@ -99,8 +98,8 @@ isn't defined in surround-bracket-alist"
 		  (> ARG 0)))
 
   (if surround-mode
-	  (message "surround-mode activated!")
-	(message "surround-mode deactivated!")))
+	  (message "surround-mode activated")
+	(message "surround-mode deactivated")))
 	
 (defvar surround-mode-map (make-sparse-keymap)
   "Keymap for surround keybindings")
