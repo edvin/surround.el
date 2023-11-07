@@ -23,9 +23,22 @@
 
 ;;; Code:
 
+(defcustom surround-bracket-alist '(
+  ("(" . ")")
+  ("[" . "]")
+  ("{" . "}"))
+  "Pairs of matching brackets used for surrounding regions"
+  :group 'surround
+  :type '(alist :value-type (group string)))
+
+(defcustom surround-auto-expand-alist '("\"" "'" "{" "[" "(")
+  "Chars to look for when auto expanding regions"
+  :group 'surround
+  :type '(alist :value-type string))
+
 (defun surround-region (bracket-char)
   "Surround region with bracket-char. If bracket-char has a match in
-surround-bracket-alist, use that for opposing wrap char"
+surround-bracket-alist, use that on right side instead"
   (interactive "cSurround region with char: \n")
   (surround--wrap-region bracket-char (surround--get-matching-bracket (char-to-string bracket-char))))
 
@@ -39,17 +52,32 @@ surround-bracket-alist, use that for opposing wrap char"
 	(insert right)
 	(widen)))
 
-(defun surround-expand-region (bracket-char &optional exclusive)
-  "Expand region to surrounding bracket-char(s)"
-  (interactive "cExpand region to char: \nP")
+(defun surround--expand-region-fn (search-b-fn exclusive)
+  "Expand region by searching backwards using search-b-fn, then looking
+at the resulting char under cursor and getting the matching bracket
+before searching forward"
   (let ((prev-beginning (if (region-active-p) (region-beginning) (point)))
 		(prev-end (if (region-active-p) (region-end) (point))))
 	(goto-char prev-beginning)
-	(search-backward (char-to-string bracket-char))
-	(set-mark (+ (point) (if exclusive 1 0)))
-	(goto-char (1+ prev-end))
-	(search-forward (surround--get-matching-bracket (char-to-string bracket-char)))
+	(funcall search-b-fn)
+	(let ((bracket-char (char-after)))
+	  (set-mark (+ (point) (if exclusive 1 0)))
+	  (goto-char prev-end)
+	  (search-forward (surround--get-matching-bracket (char-to-string bracket-char))))
 	(if exclusive (backward-char))))
+
+(defun surround-expand-region (bracket-char &optional exclusive)
+  "Expand region to surrounding bracket-char"
+  (interactive "cExpand region to char: \nP")
+  (surround--expand-region-fn (lambda() (search-backward (char-to-string bracket-char))) exclusive))
+
+(defun surround-auto-expand-region (&optional exclusive)
+  "Expand region by looking for any char in surround-auto-expand-alist
+to the left of the region and then look for the corresponding bracket-char
+via lookup in surround-bracket-alist to the right of the region"
+  (interactive)
+  (surround--expand-region-fn (lambda() (search-backward-regexp
+   (concat "[" (string-join surround-auto-expand-alist) "]"))) exclusive))
 
 (defun surround-select-line ()
   "Select the current line"
@@ -73,11 +101,6 @@ surround-bracket-alist, use that for opposing wrap char"
   (goto-char (point-max))
   (delete-char -1)
   (widen))
-
-(defvar surround-bracket-alist '(
-  ("(" . ")")
-  ("[" . "]")
-  ("{" . "}")))
 
 (defun surround--get-matching-bracket (bracket-char)
   "Return the matching bracket char, or the same char if bracket-char

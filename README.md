@@ -24,7 +24,7 @@ with `M-x straight-pull-package` and selecting `surround`.
 
 * `C-c C-s e` (`surround-expand-region`) will expand the selection region to the next matching `bracket-char`. Repeat to expand further. You can pass `C-u` first to exclude the `bracket-char` pair from the selected area. (Passing the optional `exclusive` parameter to the function).
 
-* `C-c C-s x` (`surround-auto-expand-region`) will automatically expand the selection region to the next matching registered bracket-chars. It will consult `surround-bracket-alist` as well as `surround-auto-expand-chars-alist` to look for matches. You can pass `C-u` first to exclude the matched bracket pair from the selected area. (Passing the optional `exclusive` parameter to the function).
+* `C-c C-s x` (`surround-auto-expand-region`) will automatically expand the selection region to the next matching registered bracket-chars. It will consult `surround-auto-expand-alist` to look for matches and find the opposing bracket by looking up `surround-bracket-alist`. You can pass `C-u` first to exclude the matched bracket pair from the selected area. (Passing the optional `exclusive` parameter to the function).
 
 * `C-c C-s u` (`surround-unwrap`) will unwrap/remove the brackets at the end of the currently selected region. Typically you'd select the region with `surround-expand-region` first, then either unwrap or replace the `bracket-char` pair.
 
