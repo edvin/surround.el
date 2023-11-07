@@ -75,7 +75,7 @@ before searching forward"
   "Expand region by looking for any char in surround-auto-expand-alist
 to the left of the region and then look for the corresponding bracket-char
 via lookup in surround-bracket-alist to the right of the region"
-  (interactive)
+  (interactive "*P")
   (surround--expand-region-fn (lambda() (search-backward-regexp
    (concat "[" (string-join surround-auto-expand-alist) "]"))) exclusive))
 
