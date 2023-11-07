@@ -107,7 +107,8 @@ isn't defined in surround-bracket-alist"
 
 (define-key surround-mode-map (kbd "C-C C-s s") 'surround-region)
 (define-key surround-mode-map (kbd "C-C C-s r") 'surround-replace-wrap)
-(define-key surround-mode-map (kbd "C-C C-s x") 'surround-expand-region)
+(define-key surround-mode-map (kbd "C-C C-s e") 'surround-expand-region)
+(define-key surround-mode-map (kbd "C-C C-s x") 'surround-auto-expand-region)
 (define-key surround-mode-map (kbd "C-C C-s u") 'surround-unwrap)
 (define-key surround-mode-map (kbd "C-C C-s l") 'surround-select-line)
 
