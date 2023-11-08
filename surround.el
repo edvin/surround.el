@@ -74,10 +74,16 @@ before searching forward"
 (defun surround-auto-expand-region (&optional exclusive)
   "Expand region by looking for any char in surround-auto-expand-alist
 to the left of the region and then look for the corresponding bracket-char
-via lookup in surround-bracket-alist to the right of the region"
+via lookup in surround-bracket-alist to the right of the region.
+Keep pressing x to continue auto-expanding the region"
   (interactive "*P")
   (surround--expand-region-fn (lambda() (search-backward-regexp
-   (concat "[" (string-join surround-auto-expand-alist) "]"))) exclusive))
+										 (concat "[" (string-join surround-auto-expand-alist) "]"))) exclusive)
+  (message "(Type x to repeat auto-expansion)")
+  (set-transient-map
+   (let ((map (make-sparse-keymap)))
+	 (define-key map (kbd "x") #'(lambda () (interactive) (surround-auto-expand-region exclusive)))
+	 map)))
 
 (defun surround-select-line ()
   "Select the current line"
