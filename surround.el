@@ -70,7 +70,7 @@ before searching forward"
   "Expand region to surrounding bracket-char"
   (interactive "cExpand region to char: \nP")
   (surround--expand-region-fn (lambda() (search-backward (char-to-string bracket-char))) exclusive)
-  (message "(Type e to repeat auto-expansion to '%s')" (char-to-string bracket-char))
+  (message "(Type e to repeat expansion to '%s')" (char-to-string bracket-char))
   (set-transient-map
    (let ((map (make-sparse-keymap)))
 	 (define-key map (kbd "e") #'(lambda () (interactive) (surround-expand-region bracket-char exclusive)))
