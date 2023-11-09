@@ -101,10 +101,10 @@ Keep pressing x to continue auto-expanding the region"
 (defun surround-select-line ()
   "Select the current line"
   (interactive)
-  (beginning-of-line)
+  (end-of-line)
   (set-mark (point))
-  (forward-line)
-  (message "d → duplicate line")
+  (beginning-of-line)
+  (message "d → duplicate line!")
   (set-transient-map
    (let ((map (make-sparse-keymap)))
 	 (define-key map (kbd "d") 'surround--duplicate-line)
@@ -112,13 +112,11 @@ Keep pressing x to continue auto-expanding the region"
 
 (defun surround--duplicate-line ()
   (interactive)
-  (copy-region-as-kill (region-beginning) (region-end))
+  (if (region-active-p)
+	  (copy-region-as-kill (region-beginning) (region-end)))
+  (open-line 1)
   (yank)
-  (message "d → duplicate line")
-  (set-transient-map
-   (let ((map (make-sparse-keymap)))
-	 (define-key map (kbd "d") 'surround--duplicate-line)
-	 map)))
+  (surround-select-line))
 
 (defun surround-replace-wrap (bracket-char)
   "Replace the wrapping chars at the end of the region"
