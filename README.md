@@ -28,4 +28,4 @@ with `M-x straight-pull-package` and selecting `surround`.
 
 * `C-c C-s u` (`surround-unwrap`) will unwrap/remove the brackets at the end of the currently selected region. Typically you'd select the region with `surround-expand-region` first, then either unwrap or replace the `bracket-char` pair.
 
-* `C-c C-s l` (`surround-select-line`) is a convenience function to select the whole line. It does the same as `C-a C-SPC C-e`, just nicer on the hands.
+* `C-c C-s l` (`surround-select-line`) is a convenience function to select the whole line. It does the same as `C-a C-SPC C-e`, but additionally allow you to press `d` to duplicate the line by way of the transient menu that appears after selecting the line. Keep hitting d to add more copies of the same line.
