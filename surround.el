@@ -70,12 +70,13 @@ before searching forward"
   "Expand region to surrounding bracket-char"
   (interactive "cExpand region to char: \nP")
   (surround--expand-region-fn (lambda() (search-backward (char-to-string bracket-char))) exclusive)
-  (message "e → repeat expansion to %s       r → replace-wrap       u → unwrap       s → surround-region      x → auto-expansion" (char-to-string bracket-char))
+  (message "e → repeat expansion to %s       r → replace-wrap       u → unwrap       C-u → unselect brackets       s → surround-region      x → auto-expansion" (char-to-string bracket-char))
   (set-transient-map
    (let ((map (make-sparse-keymap)))
 	 (define-key map (kbd "e") #'(lambda () (interactive) (surround-expand-region bracket-char exclusive)))
 	 (define-key map (kbd "r") 'surround-replace-wrap)
 	 (define-key map (kbd "u") 'surround-unwrap)
+	 (define-key map (kbd "C-u") 'surround-unselect-brackets)
 	 (define-key map (kbd "s") 'surround-region)
 	 (define-key map (kbd "x") #'(lambda () (interactive) (surround-auto-expand-region exclusive)))
 	 map)))
@@ -88,16 +89,25 @@ Keep pressing x to continue auto-expanding the region"
   (interactive "*P")
   (surround--expand-region-fn (lambda() (search-backward-regexp
 										 (concat "[" (string-join surround-auto-expand-alist) "]"))) exclusive)
-  (message "x → repeat auto-expansion       r → replace-wrap       u → unwrap       s → surround-region       e → expand to other bracket-char")
+  (message "x → repeat auto-expansion       r → replace-wrap       u → unwrap       C-u → unselect brackets       s → surround-region       e → expand to other bracket-char")
   (set-transient-map
    (let ((map (make-sparse-keymap)))
 	 (define-key map (kbd "x") #'(lambda () (interactive) (surround-auto-expand-region exclusive)))
 	 (define-key map (kbd "r") 'surround-replace-wrap)
 	 (define-key map (kbd "s") 'surround-region)
 	 (define-key map (kbd "u") 'surround-unwrap)
+	 (define-key map (kbd "C-u") 'surround-unselect-brackets)
 	 (define-key map (kbd "e") 'surround-expand-region)
 	 map)))
 
+(defun surround-unselect-brackets ()
+  "Exclude surrounding brackets from current selection. Actually just
+narrows the region by one char on each side."
+  (interactive)
+  (let ((current-end (region-end)))
+	(set-mark (1+ (region-beginning)))
+	(goto-char (1- current-end))))
+	
 (defun surround-select-line ()
   "Select the current line"
   (interactive)
